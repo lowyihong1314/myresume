@@ -1,0 +1,33 @@
+{
+  "name": "myresume",
+  "main": "src/index.ts",
+  "assets": { "directory": "../frontend/dist" },
+  "workers_dev": true,
+  "preview_urls": true,
+  "compatibility_date": "2025-10-08",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "routes": [
+    {
+      "pattern": "yihong1031.com",
+      "zone_name": "yihong1031.com",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  }
+}
