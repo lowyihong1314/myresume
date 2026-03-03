@@ -1,3 +1,4 @@
+// myresume/wrangler.jsonc
 {
   "name": "myresume",
   "main": "src/index.ts",

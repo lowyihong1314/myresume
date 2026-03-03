@@ -1,68 +1,90 @@
+@import "tailwindcss";
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-primary: #FF8400;
+  --color-secondary: #E7E8E5;
+  --color-accent: #22D3EE;
+  --color-bg-dark: #0A0F1C;
+  --color-bg-section: #0F172A;
+  --color-bg-card: #1E293B;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
   }
-  a:hover {
-    color: #747bff;
+
+  html {
+    scroll-behavior: smooth;
   }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-primary);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Prevent text size adjustment on mobile */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Better tap highlight color */
+  * {
+    -webkit-tap-highlight-color: rgba(34, 211, 238, 0.2);
+  }
+
+  .font-primary {
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  .font-secondary {
+    font-family: "Inter", sans-serif;
+  }
+
+  .lucide-icon {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    user-select: none;
+  }
+
+  /* Smooth touch scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent double-tap zoom on buttons */
   button {
-    background-color: #f9f9f9;
+    touch-action: manipulation;
   }
+}
+
+.hero-bg {
+  background: radial-gradient(circle at 20% 30%, #1e293b 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, #0f172a 0%, transparent 40%),
+              linear-gradient(135deg, #020617 0%, #0a0f1c 100%);
+  animation: heroFlow 18s ease-in-out infinite alternate;
+}
+
+@keyframes heroFlow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(25deg); }
 }

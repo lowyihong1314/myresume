@@ -1,0 +1,9 @@
+reboot-profile: v1
+name: LOW YI HONG
+aliases: yukang, 宇康, 阿康
+role: Full Stack Developer
+website: https://yihong1031.com
+github: https://github.com/lowyihong1314
+contact_tel: +6011-3660-0057
+api: /api/reboot
+updated_utc: 2026-03-03
