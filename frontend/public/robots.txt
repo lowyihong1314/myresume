@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yihong1031.com/sitemap.xml
