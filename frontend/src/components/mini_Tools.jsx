@@ -1,6 +1,22 @@
 import { qr_generator } from "../tools/qr_generator";
 import { barcode_generator } from "../tools/barcode_generator";
 import { heic_to_jpg } from "../tools/heic_to_jpg";
+import { auth_tool } from "../tools/auth_tool";
+
+async function openDashboardOrAuth() {
+    try {
+        const response = await fetch("/api/auth/me", { method: "GET" });
+
+        if (response.ok) {
+            window.location.assign("/dashboard");
+            return;
+        }
+    } catch {
+        // Fall back to auth modal if the auth check fails.
+    }
+
+    auth_tool();
+}
 // mini_Tools.jsx
 export function mini_Tools() {
     // 防止重复打开
@@ -224,9 +240,21 @@ export function mini_Tools() {
         },
     });
 
+    const authCard = makeToolCard({
+        name: "Dashboard / Login",
+        desc: "Open your dashboard if signed in, or login/register first.",
+        badge: "AUTH",
+        onClick: async () => {
+            const overlay = document.getElementById("mini-tools-modal");
+            if (overlay) overlay.remove();
+            await openDashboardOrAuth();
+        },
+    });
+
     body.appendChild(qrCard);
     body.appendChild(barcodeCard);
     body.appendChild(heicCard);
+    body.appendChild(authCard);
 
     // Footer
     const footer = document.createElement("div");

@@ -1,27 +1,36 @@
-// worker/src/index.ts
+import { ensureEasyPosTables } from "./easypos/schema";
+import { EasyPosRealtimeRoom } from "./easypos/realtime";
+import { json } from "./http";
+import { handleApiRequest } from "./router";
+import type { Env } from "./types";
+import { ensureUsersTable } from "./users/schema";
+
 export default {
-  async fetch(request: Request, env: any) {
-    const url = new URL(request.url);
+  async fetch(request: Request, env: Env) {
+    try {
+      const url = new URL(request.url);
+      await ensureUsersTable(env.my_db);
+      await ensureEasyPosTables(env.my_db);
 
-    // 1️⃣ API
-    if (url.pathname.startsWith("/api")) {
-      return new Response(JSON.stringify({ ok: true }), {
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      const apiResponse = await handleApiRequest(request, env, url);
+      if (apiResponse) {
+        return apiResponse;
+      }
+
+      const res = await env.ASSETS.fetch(request);
+
+      if (res.status === 404) {
+        return env.ASSETS.fetch(new Request(`${url.origin}/index.html`));
+      }
+
+      return res;
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unexpected worker error.";
+
+      return json({ ok: false, message }, { status: 500 });
     }
-
-    // 2️⃣ 静态资源
-    const res = await env.ASSETS.fetch(request);
-
-    // 3️⃣ SPA fallback（/about /contact 等）
-    if (res.status === 404) {
-      return env.ASSETS.fetch(
-        new Request(`${url.origin}/index.html`)
-      );
-    }
-
-    return res;
   },
 };
 
-// npm run deploy 
+export { EasyPosRealtimeRoom };
